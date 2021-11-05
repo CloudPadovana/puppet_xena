@@ -1,10 +1,13 @@
 class compute_xena::stopservices inherits compute_xena::params {
 
+########
+#i servizi devono venir spenti solo in fase di installazione dei compute quindi quando la release e' ancora a train
+########
 # Services needed
 #systemctl stop openvswitch
 #systemctl stop neutron-openvswitch-agent
 #systemctl stop openstack-nova-compute
-###
+########
     
     #notify { 'stopservices': 
     #                    message => "sono in stop services"
@@ -17,20 +20,14 @@ class compute_xena::stopservices inherits compute_xena::params {
                         stop        => "/usr/bin/systemctl stop neutron-openvswitch-agent",
                         require => Exec['checkForRelease'],
             }
-    ## FF servizio chiesto da nova
-    #service { 'stop libvirt service':
-    #                    stop        => "/usr/bin/systemctl stop libvirtd.service",
-    #                    require => Exec['checkForRelease'],
-    #        }
-    ##
-
     service { 'stop openstack-nova-compute service':
                         stop        => "/usr/bin/systemctl stop openstack-nova-compute",
                         require => Exec['checkForRelease'],
             }
     
     exec { 'checkForRelease':
-       command => "/usr/bin/yum list installed | grep centos-release-openstack-rocky ; /usr/bin/echo $?",
+       # FF command => "/usr/bin/yum list installed | grep centos-release-openstack-rocky ; /usr/bin/echo $?",
+       command => "/usr/bin/yum list installed | grep centos-release-openstack-train ; /usr/bin/echo $?",
        returns => "0",
        refreshonly => true,
     }

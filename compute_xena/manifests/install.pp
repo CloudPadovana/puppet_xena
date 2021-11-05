@@ -3,9 +3,6 @@ class compute_xena::install inherits compute_xena::params {
 
 $cloud_role = $compute_xena::cloud_role          
 
-
-
-
 ### Repository settings (remove old rpm and install new one)
   
   define removepackage {
@@ -16,9 +13,10 @@ $cloud_role = $compute_xena::cloud_role
     }
   }
 
-  $oldrelease = [ 'centos-release-openstack-rocky',
+  $oldrelease = [ 'centos-release-openstack-train',
                 ]
 
+ ## FF forse non serve per xena
   $oldpackage = [ 'centos-release-ceph-luminous',
                 ]
 
