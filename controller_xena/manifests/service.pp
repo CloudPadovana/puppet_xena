@@ -11,13 +11,6 @@ class controller_xena::service inherits controller_xena::params {
            }
 
 
-# service { "fetch-crl-cron":
-#                   ensure      => running,
-#                   enable      => true,
-#                   hasstatus   => true,
-#                   hasrestart  => true,
-#           }
-
 file { "/etc/cron.d/fetch-crl":
     ensure   => file,
     owner    => "root",
@@ -28,7 +21,6 @@ file { "/etc/cron.d/fetch-crl":
 
 
 
- ## FF added placement in Train ##       
  # Services for keystone, placement       
     service { "httpd":
                    ensure      => running,
@@ -46,14 +38,6 @@ file { "/etc/cron.d/fetch-crl":
                    hasrestart  => true,
                    subscribe   => Class['controller_xena::configure_glance'],
            }
-## PEM glance-registry disabled since stein
-#    service { "openstack-glance-registry":
-#                   ensure      => running,
-#                   enable      => true,
-#                   hasstatus   => true,
-#                   hasrestart  => true,
-#                   subscribe   => Class['controller_xena::configure_glance'],
-#            }
 
  # Services for nova       
     service { "openstack-nova-api":
@@ -63,14 +47,6 @@ file { "/etc/cron.d/fetch-crl":
                    hasrestart  => true,
                    subscribe   => Class['controller_xena::configure_nova'],
            }
-## FF deprecated since 18.0.0 (Rocky)
-#    service { "openstack-nova-consoleauth":
-#                   ensure      => running,
-#                  enable      => true,
-#                   hasstatus   => true,
-#                   hasrestart  => true,
-#                   subscribe   => Class['controller_xena::configure_nova'],
-#           }
     service { "openstack-nova-scheduler":
                    ensure      => running,
                    enable      => true,
@@ -176,13 +152,6 @@ file { "/etc/cron.d/fetch-crl":
                    hasrestart  => true,
                    subscribe   => Class['controller_xena::configure_cinder'],
            }
-#    service { "target":
-#                   ensure      => running,
-#                   enable      => true,
-#                   hasstatus   => true,
-#                   hasrestart  => true,
-#                   subscribe   => Class['controller_xena::configure_cinder'],
-#           }
            
  # Services for heat
     service { "openstack-heat-api":
