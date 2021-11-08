@@ -1,4 +1,4 @@
-class controller_xenan::rsyslog inherits controller_xenan::params {
+class controller_xena::rsyslog inherits controller_xena::params {
 
 #
 # Questa classe configura rsyslog in modo da centralizzare i log su cld-foreman
@@ -17,7 +17,7 @@ class controller_xenan::rsyslog inherits controller_xenan::params {
       }
 
       file {'rsyslog_conf':
-          source      => 'puppet:///modules/controller_xenan/rsyslog.conf',
+          source      => 'puppet:///modules/controller_xena/rsyslog.conf',
           path        => '/etc/rsyslog.conf',
           backup      => true,
           owner   => root,
@@ -27,7 +27,7 @@ class controller_xenan::rsyslog inherits controller_xenan::params {
          }
 
       file {'ignore_nagios':
-          source      => 'puppet:///modules/controller_xenan/ignore-systemd-session-slice-nagios.conf',
+          source      => 'puppet:///modules/controller_xena/ignore-systemd-session-slice-nagios.conf',
           path        => '/etc/rsyslog.d/ignore-systemd-session-slice-nagios.conf',
           backup      => true,
           owner   => root,
