@@ -16,42 +16,35 @@ $cloud_role = $compute_xena::cloud_role
   $oldrelease = [ 'centos-release-openstack-train',
                 ]
 
- ## FF forse non serve per xena
-  $oldpackage = [ 'centos-release-ceph-luminous',
-                ]
+ ## FF non serve per xena
+ # $oldpackage = [ 'centos-release-ceph-luminous',
+ #               ]
 
   $newrelease =  'centos-release-openstack-xena'
 
   $yumutils = 'yum-utils'
 
-case $operatingsystemrelease {
-    /^7.*/: {
-        $centos7 = true
-        $centos8 = false
-        $pythonnetwork = 'python2-networkx.noarch'
-        $genericpackages = ["crudini",
-                            "yum-plugin-priorities",
-                            "ipset",
-                            "sysfsutils", ]
-    }
-    /^8.*/: {
-        $centos7 = false
-        $centos8 = true
-        $pythonnetwork = 'python3-networkx.noarch'
-        $genericpackages = ["crudini",
-                            "ipset",
-                            "sysfsutils", ]
-    }
-}
-
-
-  $neutronpackages = [   "openstack-neutron",
-                         "openstack-neutron-openvswitch",
-                         "openstack-neutron-common",
-                         "openstack-neutron-ml2", ]
-
-  $novapackages = [ "openstack-nova-compute",
-                     "openstack-nova-common", ]
+### FF non serve piu'
+#case $operatingsystemrelease {
+#    /^7.*/: {
+#        $centos7 = true
+#        $centos8 = false
+#        $pythonnetwork = 'python2-networkx.noarch'
+#        $genericpackages = ["crudini",
+#                            "yum-plugin-priorities",
+#                            "ipset",
+#                            "sysfsutils", ]
+#    }
+#    /^8.*/: {
+#        $centos7 = false
+#        $centos8 = true
+#        $pythonnetwork = 'python3-networkx.noarch'
+#        $genericpackages = ["crudini",
+#                            "ipset",
+#                            "sysfsutils", ]
+#    }
+#}
+####
 
   file { "/etc/yum/vars/contentdir":
          path    => '/etc/yum/vars/contentdir',
@@ -67,28 +60,24 @@ case $operatingsystemrelease {
      $oldpackage :
   } ->
 
-
-# enable PowerTools repo (only for CentOS8)
-
+  exec { "removestring_failover":
+            command => "/usr/bin/sed -i "/failovermethod/d" /etc/yum.repos.d/puppet5.repo",
+            onlyif => "/usr/bin/grep failovermethod=priority /etc/yum.repos.d/puppet5.repo",
+  } ->
 
   package { $yumutils :
     ensure => 'installed',
   } ->
 
+# enable PowerTools repo (only for CentOS8)
   exec { "yum enable PowerTools repo":
          path => "/usr/bin",
-#         command => "yum-config-manager --enable PowerTools",
          command => "yum-config-manager --enable powertools",
          unless => "$centos7 || /usr/bin/yum repolist enabled | grep -i powertools",
          timeout => 3600,
          require => Package[$yumutils],
   } ->
 
-
-#  exec { "clean repo cache":
-#         command => "/usr/bin/yum clean all",
-#         onlyif => "/bin/rpm -qi centos-release-ceph-nautilus.noarch | grep 'not installed'",
-#  } ->
 # Esegue yum clean all once (lo si fa a meno che non stiamo gia` usando il repo xena)
   exec { "clean repo cache":
          command => "/usr/bin/yum clean all",
@@ -99,34 +88,31 @@ case $operatingsystemrelease {
     ensure => 'installed',
   } ->
 
-  ### FF update a stein e xena consiglia di disabilitare EPEL  
+  ### negli update si consiglia di disabilitare EPEL (epel-next e' l'unico abilitato da disabilitare) 
   exec { "yum disable EPEL repo":
-         command => "/usr/bin/yum-config-manager --disable epel*",
+         command => "/usr/bin/yum-config-manager --disable epel\*",
          onlyif => "/bin/rpm -qa | grep centos-release-openstack-xena && /usr/bin/yum repolist enabled | grep epel",
          timeout => 3600,
          require => Package[$yumutils],
   } -> 
 
-#
-
-
-exec { "yum update for update from Rocky in DELL hosts":
+## FF in xena forse questo non serve piu', da provare ##
+  exec { "yum update for update from Train in DELL hosts":
          command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
-         onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'rocky'",
+         onlyif => "/bin/rpm -qi dell-system-update | grep 'Architecture:' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'train'",
          timeout => 3600,
   } ->
 
-  exec { "yum update for update from Rocky":
+  exec { "yum update for update from Train":
          command => "/usr/bin/yum -y update",
-         onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'rocky'",
+         onlyif => "/bin/rpm -qi dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep openstack-neutron.noarch | grep -i 'train'",
          timeout => 3600,
   } ->
-
-
+#####
 
 # Rename nova config file  
   exec { "mv_nova_conf_old":
-         command => "/usr/bin/mv /etc/nova/nova.conf /etc/nova/nova.conf.rocky",
+         command => "/usr/bin/mv /etc/nova/nova.conf /etc/nova/nova.conf.train",
          onlyif  => "/usr/bin/test -e /etc/nova/nova.conf.rpmnew",
   } ->
  
@@ -137,7 +123,7 @@ exec { "yum update for update from Rocky in DELL hosts":
 
 # Rename neutron config file  
   exec { "mv_neutron_conf_old":
-         command => "/usr/bin/mv /etc/neutron/neutron.conf /etc/neutron/neutron.conf.rocky",
+         command => "/usr/bin/mv /etc/neutron/neutron.conf /etc/neutron/neutron.conf.train",
          onlyif  => "/usr/bin/test -e /etc/neutron/neutron.conf.rpmnew",
   } ->
 
@@ -147,7 +133,7 @@ exec { "yum update for update from Rocky in DELL hosts":
   } ->
 
   exec { "mv_neutron_openvswitch_old":
-         command => "/usr/bin/mv /etc/neutron/plugins/ml2/openvswitch_agent.ini /etc/neutron/plugins/ml2/openvswitch_agent.ini.rocky",
+         command => "/usr/bin/mv /etc/neutron/plugins/ml2/openvswitch_agent.ini /etc/neutron/plugins/ml2/openvswitch_agent.ini.train",
          onlyif  => "/usr/bin/test -e /etc/neutron/plugins/ml2/openvswitch_agent.ini.rpmnew",
   } ->
 
@@ -158,7 +144,7 @@ exec { "yum update for update from Rocky in DELL hosts":
 
 
   exec { "mv_neutron_ml2_old":
-         command => "/usr/bin/mv /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini.rocky",
+         command => "/usr/bin/mv /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugins/ml2/ml2_conf.ini.train",
          onlyif  => "/usr/bin/test -e /etc/neutron/plugins/ml2/ml2_conf.ini.rpmnew",
   } ->
 
@@ -167,16 +153,6 @@ exec { "yum update for update from Rocky in DELL hosts":
          onlyif  => "/usr/bin/test -e /etc/neutron/plugins/ml2/ml2_conf.ini.rpmnew",
   } ->
 
-# Rename puppet auth file  
-  exec { "mv_puppet_auth_old":
-         command => "/usr/bin/mv /etc/puppet/auth.conf /etc/puppet/auth.conf.rocky",
-         onlyif  => "/usr/bin/test -e /etc/puppet/auth.conf.rpmnew",
-  } ->
-
-  exec { "mv_puppet_auth_new":
-         command => "/usr/bin/mv /etc/puppet/auth.conf.rpmnew /etc/puppet/auth.conf",
-         onlyif  => "/usr/bin/test -e /etc/puppet/auth.conf.rpmnew",
-  } ->
 
 ## Install generic packages
   package { $genericpackages: 
@@ -184,29 +160,31 @@ exec { "yum update for update from Rocky in DELL hosts":
     require => Package[$newrelease]
    } ->
 
-  package { $neutronpackages: 
-    ensure => "installed",
-    require => Package[$newrelease]
-  } ->
-
-  package { $novapackages: 
-    ensure => "installed",
-    require => Package[$newrelease]
-  } ->
-
+## FF non serve in xena
+#  package { $neutronpackages: 
+#    ensure => "installed",
+#    require => Package[$newrelease]
+#  } ->
+#
+#  package { $novapackages: 
+#    ensure => "installed",
+#    require => Package[$newrelease]
+#  } ->
+#####
+#
 
 # Eseguo uno yum update se il pacchetto python*-networkx.noarch non proviene dal repo xena
 # (Il nome del pacchetto varia tra centos7 e centos8)
 # Serve almeno per installazioni da scratch su centos8
   exec { "yum update in DELL hosts":
          command => "/usr/bin/yum -y --disablerepo dell-system-update_independent --disablerepo dell-system-update_dependent -x facter update",
-         onlyif => "/bin/rpm -q dell-system-update &&  /usr/bin/yum list installed | grep $pythonnetwork | grep -v 'centos-openstack-xena'",
+         onlyif => "/bin/rpm -q dell-system-update &&  /usr/bin/yum list installed | grep python3-networkx | grep -v 'centos-openstack-xena'",
          timeout => 3600,
   } ->
 
   exec { "yum update":
          command => "/usr/bin/yum -y update",
-         onlyif => "/bin/rpm -q dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep $pythonnetwork | grep -v 'centos-openstack-xena'",
+         onlyif => "/bin/rpm -q dell-system-update | grep 'not installed' &&  /usr/bin/yum list installed | grep python3-networkx | grep -v 'centos-openstack-xena'",
          timeout => 3600,
   } ->
 
