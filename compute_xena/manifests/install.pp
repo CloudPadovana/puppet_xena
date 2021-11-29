@@ -1,4 +1,5 @@
 class compute_xena::install inherits compute_xena::params {
+
 #include compute_xena::params
 
 $cloud_role = $compute_xena::cloud_role          
@@ -44,7 +45,19 @@ $cloud_role = $compute_xena::cloud_role
 #                            "sysfsutils", ]
 #    }
 #}
-####
+
+
+  $genericpackages = [ "crudini",
+                       "ipset",
+                       "sysfsutils", ]
+
+  $neutronpackages = [ "openstack-neutron",
+                       "openstack-neutron-openvswitch",
+                       "openstack-neutron-common",
+                       "openstack-neutron-ml2", ]
+
+  $novapackages = [ "openstack-nova-compute",
+                     "openstack-nova-common", ]
 
   file { "/etc/yum/vars/contentdir":
          path    => '/etc/yum/vars/contentdir',
@@ -56,12 +69,12 @@ $cloud_role = $compute_xena::cloud_role
      $oldrelease :
   } ->
 
-  compute_xena::install::removepackage{
-     $oldpackage :
-  } ->
+  #compute_xena::install::removepackage{
+  #   $oldpackage :
+  #} ->
 
   exec { "removestring_failover":
-            command => "/usr/bin/sed -i "/failovermethod/d" /etc/yum.repos.d/puppet5.repo",
+            command => "/usr/bin/sed -i \"/failovermethod/d\" /etc/yum.repos.d/puppet5.repo",
             onlyif => "/usr/bin/grep failovermethod=priority /etc/yum.repos.d/puppet5.repo",
   } ->
 
@@ -71,9 +84,8 @@ $cloud_role = $compute_xena::cloud_role
 
 # enable PowerTools repo (only for CentOS8)
   exec { "yum enable PowerTools repo":
-         path => "/usr/bin",
-         command => "yum-config-manager --enable powertools",
-         unless => "$centos7 || /usr/bin/yum repolist enabled | grep -i powertools",
+         command => "/usr/bin/yum-config-manager --enable powertools",
+         unless => "/usr/bin/yum repolist enabled | grep -i powertools",
          timeout => 3600,
          require => Package[$yumutils],
   } ->
@@ -160,18 +172,15 @@ $cloud_role = $compute_xena::cloud_role
     require => Package[$newrelease]
    } ->
 
-## FF non serve in xena
-#  package { $neutronpackages: 
-#    ensure => "installed",
-#    require => Package[$newrelease]
-#  } ->
-#
-#  package { $novapackages: 
-#    ensure => "installed",
-#    require => Package[$newrelease]
-#  } ->
-#####
-#
+  package { $neutronpackages: 
+    ensure => "installed",
+    require => Package[$newrelease]
+  } ->
+
+  package { $novapackages: 
+    ensure => "installed",
+    require => Package[$newrelease]
+  } ->
 
 # Eseguo uno yum update se il pacchetto python*-networkx.noarch non proviene dal repo xena
 # (Il nome del pacchetto varia tra centos7 e centos8)
@@ -195,9 +204,10 @@ $cloud_role = $compute_xena::cloud_role
                match  => 'Defaults:neutron !requiretty',
             }
  
-if $::compute_xena::cloud_role == "is_prod_localstorage" or $::compute_xena::cloud_role ==  "is_prod_sharedstorage" {                             
+if $::compute_xena::cloud_role == "is_prod_localstorage" or $::compute_xena::cloud_role ==  "is_prod_sharedstorage" {
+
    package { 'glusterfs-fuse':
               ensure => 'installed',
            }
-                                                                                     } 
+ } 
 }
