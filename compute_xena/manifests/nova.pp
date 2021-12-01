@@ -96,6 +96,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
   compute_xena::nova::do_config { 'nova_ram_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'ram_allocation_ratio', value => $compute_xena::params::ram_allocation_ratio, }
   compute_xena::nova::do_config { 'nova_disk_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'disk_allocation_ratio', value => $compute_xena::params::disk_allocation_ratio, }
   compute_xena::nova::do_config { 'nova_allow_resize': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'allow_resize_to_same_host', value => $compute_xena::params::allow_resize, }
+  ### FF in xena deve essere esplicitato il compute_driver
+  compute_xena::nova::do_config { 'nova_compute_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'compute_driver', value => $compute_xena::params::nova_compute_driver, }
   compute_xena::nova::do_config { 'nova_auth_type': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'auth_type', value => $compute_xena::params::auth_type}
   compute_xena::nova::do_config { 'nova_project_domain_name': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $compute_xena::params::project_domain_name, }
   compute_xena::nova::do_config { 'nova_user_domain_name': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $compute_xena::params::user_domain_name, }
