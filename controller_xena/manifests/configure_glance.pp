@@ -4,8 +4,6 @@ class controller_xena::configure_glance inherits controller_xena::params {
 # Questa classe:
 # Crea la directory per node_staging_uri
 # - popola il file /etc/glance/glance-api.conf
-# - popola il file /etc/glance/glance-registry.conf
-## PEM da xena glance-registry non c'e' piu'
 # - crea il file /etc/glance/policy.yaml
 
 # Changes wrt default:
@@ -48,49 +46,17 @@ define remove_config ($conf_file, $section, $param, $value) {
                    }
        }
                                                                                                                                              
-  
-
-
 # glance-api.conf
-
-#
-# This was set in the past for ceilometer
-#   controller_xena::configure_glance::do_config { 'glance_api_notification_driver': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'notification_driver', value => $controller_xena::params::glance_notification_driver, }
-
-# v1 api was enabled in Ocata, otherwise euca-describe-images didn't work      
-# v1 api removed in rocky
-#  controller_xena::configure_glance::do_config { 'glance_enable_v1_api': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enable_v1_api', value => $controller_xena::params::glance_enable_v1_api, }
 
 # 25 GB max size for an image
   controller_xena::configure_glance::do_config { 'glance_image_size_cap': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'image_size_cap', value => $controller_xena::params::glance_image_size_cap, }
-
-# registry_host is deprecated in Rocky
-# As far as I (Massimo) understand, it was at any rate useless in our environment
-#       controller_xena::configure_glance::do_config { 'glance_api_registry_host': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'registry_host', value => $controller_xena::params::vip_mgmt, }
-#
-# Not needed anymore since we have now a single backend (and this attribute is now deprecated)
-#  controller_xena::configure_glance::do_config { 'glance_api_show_multiple_locations': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_multiple_locations', value => $controller_xena::params::glance_api_show_multiple_locations, }
   controller_xena::configure_glance::do_config { 'glance_api_show_image_direct_url': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_image_direct_url', value => $controller_xena::params::glance_api_show_image_direct_url, }
-#
-# parametro necessario per la nuova funzionalita' di interoperable image import
-# deprecato in xena. sostituito da filesystem_store_datadir
-#  controller_xena::configure_glance::do_config { 'glance_api_node_staging_uri': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'node_staging_uri', value => $controller_xena::params::glance_api_node_staging_uri, }
-
-
-# New ways in rocky to define glance backends       
-# But this causes problems when adding location: revert to old mode
-#       controller_xena::configure_glance::do_config { 'glance_api_enabled_backends': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_xena::params::glance_api_enabled_backends, }
-# In xena we try to enable glance backends again
   controller_xena::configure_glance::do_config { 'glance_api_enabled_backends': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_xena::params::glance_api_enabled_backends, }
-# In xena we start to configure reserved stores
+  controller_xena::configure_glance::do_config { 'glance_log_dir': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'log_dir', value => $controller_xena::params::glance_log_dir, }
   controller_xena::configure_glance::do_config { 'glance_api_filesystem_store_datadir': conf_file => '/etc/glance/glance-api.conf', section => 'os_glance_staging_store', param => 'filesystem_store_datadir', value => $controller_xena::params::glance_api_filesystem_store_datadir, }
-
 
   controller_xena::configure_glance::do_config { 'glance_api_db': conf_file => '/etc/glance/glance-api.conf', section => 'database', param => 'connection', value => $controller_xena::params::glance_db, }
 
-       
-  # FF in queens auth_uri ed auth_url sono sulla porta 5000 per glance
-  # FF in rocky [keystone_authtoken] auth_uri diventa www_authenticate_uri
   controller_xena::configure_glance::do_config { 'glance_api_www_authenticate_uri': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_xena::params::www_authenticate_uri, }
   controller_xena::configure_glance::do_config { 'glance_api_auth_url': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'auth_url', value => $controller_xena::params::glance_auth_url, }
   controller_xena::configure_glance::do_config { 'glance_api_project_domain_name': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $controller_xena::params::project_domain_name, }
@@ -101,23 +67,15 @@ define remove_config ($conf_file, $section, $param, $value) {
   controller_xena::configure_glance::do_config { 'glance_api_cafile': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_xena::params::cafile, }
   controller_xena::configure_glance::do_config { 'glance_api_memcached_servers': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_xena::params::memcached_servers, }
   controller_xena::configure_glance::do_config { 'glance_api_auth_type': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'auth_type', value => $controller_xena::params::auth_type, }
+  controller_xena::configure_glance::do_config { 'glance_service_token_roles_required': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'service_token_roles_required ', value => $controller_xena::params::service_token_roles_required, }
 
   controller_xena::configure_glance::do_config { 'glance_api_flavor': conf_file => '/etc/glance/glance-api.conf', section => 'paste_deploy', param => 'flavor', value => $controller_xena::params::flavor, }
 
-#
-# stores and default_store deprecated against new attributes enabled_backends and default_backend
-# But this causes problems with add location: let's revert to old mode       
-#  controller_xena::configure_glance::do_config { 'glance_api_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'stores', value => $controller_xena::params::glance_store, }
-#  controller_xena::configure_glance::do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_store', value => $controller_xena::params::glance_api_default_store, }
-# In xena we try to enable multiple stores back
   controller_xena::configure_glance::do_config { 'glance_api_default_store': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'default_backend', value => $controller_xena::params::glance_api_default_store, }
-
 # File backend       
   controller_xena::configure_glance::do_config { 'glance_api_store_datadir': conf_file => '/etc/glance/glance-api.conf', section => 'glance_store', param => 'filesystem_store_datadir', value => $controller_xena::params::glance_store_datadir, }
 
 # Ceph backend       
-# api_rbd_store_* gets its own section in xena [glance_store] ==> [rbd]
-# In xena we also get a 'description' parameter for each enabled backend
   controller_xena::configure_glance::do_config { 'glance_api_rbd_store_description': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'store_description', value => $controller_xena::params::glance_api_rbd_store_description, }
   controller_xena::configure_glance::do_config { 'glance_api_rbd_store_pool': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_pool', value => $controller_xena::params::glance_api_rbd_store_pool, }
   controller_xena::configure_glance::do_config { 'glance_api_rbd_store_user': conf_file => '/etc/glance/glance-api.conf', section => 'rbd', param => 'rbd_store_user', value => $controller_xena::params::glance_api_rbd_store_user, }
@@ -132,8 +90,9 @@ define remove_config ($conf_file, $section, $param, $value) {
 #######Proxy headers parsing
   controller_xena::configure_glance::do_config { 'glance_enable_proxy_headers_parsing': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_middleware', param => 'enable_proxy_headers_parsing', value => $controller_xena::params::enable_proxy_headers_parsing, }
 
-
   controller_xena::configure_glance::do_config { 'glance_api_rabbit_ha_queues': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_xena::params::rabbit_ha_queues, }
   controller_xena::configure_glance::do_config { 'glance_api_amqp_durable_queues': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_messaging_rabbit', param => 'amqp_durable_queues', value => $controller_xena::params::amqp_durable_queues, }
+
+  controller_xena::configure_glance::do_config { 'glance_policy': conf_file => '/etc/glance/glance-api.conf', section => 'oslo_policy', param => 'policy_file', value => $controller_xena::params::glance_policy_file, }
 
 }
