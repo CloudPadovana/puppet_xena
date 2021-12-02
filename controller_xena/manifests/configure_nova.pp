@@ -62,7 +62,6 @@ define do_config_list ($conf_file, $section, $param, $values) {
               }
     }
               
-
        
 # nova.conf
    controller_xena::configure_nova::do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $controller_xena::params::auth_strategy, }
@@ -72,15 +71,14 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
    controller_xena::configure_nova::do_config { 'nova_transport_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_xena::params::transport_url, }
    controller_xena::configure_nova::do_config { 'nova_my_ip': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_xena::params::vip_mgmt, }
-   ################# 
-   # FF removed in ussuri # 
-   #controller_train::configure_nova::do_config { 'nova_firewall_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'firewall_driver', value => $controller_xena::params::nova_firewall_driver, }
-   ################# 
    controller_xena::configure_nova::do_config { 'nova_use_neutron': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'use_neutron', value => $controller_xena::params::use_neutron, }
    controller_xena::configure_nova::do_config { 'nova_cpu_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'cpu_allocation_ratio', value => $controller_xena::params::nova_cpu_allocation_ratio, }
    controller_xena::configure_nova::do_config { 'nova_disk_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'disk_allocation_ratio', value => $controller_xena::params::nova_disk_allocation_ratio, }
    controller_xena::configure_nova::do_config { 'nova_ram_allocation_ratio': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'ram_allocation_ratio', value => $controller_xena::params::nova_ram_allocation_ratio, }
    controller_xena::configure_nova::do_config { 'nova_allow_resize': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'allow_resize_to_same_host', value => $controller_xena::params::allow_resize, }
+   ## FF in xena va esplicitato
+   controller_xena::configure_nova::do_config { 'nova_log_dir': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'log_dir', value => $controller_xena::params::nova_log_dir, }
+   ###
    controller_xena::configure_nova::do_config { 'nova_enabled_filters': conf_file => '/etc/nova/nova.conf', section => 'filter_scheduler', param => 'enabled_filters', value => $controller_xena::params::enabled_filters, }
    controller_xena::configure_nova::do_config { 'nova_default_schedule_zone': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'default_schedule_zone', value => $controller_xena::params::nova_default_schedule_zone, }
    controller_xena::configure_nova::do_config { 'nova_scheduler_max_attempts': conf_file => '/etc/nova/nova.conf', section => 'scheduler', param => 'max_attempts', value => $controller_xena::params::nova_scheduler_max_attempts, }

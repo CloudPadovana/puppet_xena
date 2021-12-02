@@ -283,17 +283,15 @@ class controller_xena::params ($cloud_role){
    $neutron_notify_nova_on_port_status_changes = true
    $neutron_service_plugins = 'router'
    $neutron_username = 'neutron'
-   ## FF in Stein the name of the service is removed
    $nova_cinder_catalog_info = 'volumev3::internalURL'
    $nova_cpu_allocation_ratio = '4.0'
    $nova_default_schedule_zone = 'nova'
    $nova_discover_hosts_in_cells_interval = '300'
-   ### FF deprecato in PIKE
-   ### MS ma la doc dice cmq di settarlo
    $nova_firewall_driver = 'nova.virt.firewall.NoopFirewallDriver'
    $nova_inject_key = true
    $nova_inject_partition = '-1'
    $nova_inject_password = true
+   $nova_log_dir = '/var/log/nova'
    $nova_oslo_lock_path = '/var/lib/nova/tmp'
    $nova_scheduler_max_attempts = '10'
    $nova_host_subset_size = '10'
