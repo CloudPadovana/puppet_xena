@@ -30,7 +30,9 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_xena::configure_cinder::do_config { 'cinder_public_endpoint': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_xena::params::cinder_public_endpoint, }
    #MS iscsi_helper deprecated; replaced with target_helper    
    controller_xena::configure_cinder::do_config { 'cinder_iscsi_helper': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'target_helper', value => $controller_xena::params::cinder_iscsi_helper, }
-   controller_xena::configure_cinder::do_config { 'cinder_glance_api_servers': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glance_api_servers', value => $controller_xena::params::glance_api_servers, }
+## FF in xena e' deprecato
+#   controller_xena::configure_cinder::do_config { 'cinder_glance_api_servers': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'glance_api_servers', value => $controller_xena::params::glance_api_servers, }
+##   
    controller_xena::configure_cinder::do_config { 'cinder_enabled_backends': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_xena::params::cinder_enabled_backends, }
    controller_xena::configure_cinder::do_config { 'cinder_default_volume_type': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'default_volume_type', value => $controller_xena::params::cinder_default_volume_type, }
 

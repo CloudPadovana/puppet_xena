@@ -66,8 +66,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
 # nova.conf
    controller_xena::configure_nova::do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $controller_xena::params::auth_strategy, }
 
-       controller_xena::configure_nova::do_config { 'nova_vendordata_providers': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_providers', value => $controller_xena::params::nova_vendordata_providers, }
-       controller_xena::configure_nova::do_config { 'nova_vendordata_jsonfile_path': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_jsonfile_path', value => $controller_xena::params::nova_vendordata_jsonfile_path, }
+   controller_xena::configure_nova::do_config { 'nova_vendordata_providers': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_providers', value => $controller_xena::params::nova_vendordata_providers, }
+   controller_xena::configure_nova::do_config { 'nova_vendordata_jsonfile_path': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_jsonfile_path', value => $controller_xena::params::nova_vendordata_jsonfile_path, }
 
    controller_xena::configure_nova::do_config { 'nova_transport_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_xena::params::transport_url, }
    controller_xena::configure_nova::do_config { 'nova_my_ip': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'my_ip', value => $controller_xena::params::vip_mgmt, }
@@ -108,7 +108,9 @@ define do_config_list ($conf_file, $section, $param, $values) {
    controller_xena::configure_nova::do_config { 'nova_inject_password': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_password', value => $controller_xena::params::nova_inject_password, }
    controller_xena::configure_nova::do_config { 'nova_inject_key': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_key', value => $controller_xena::params::nova_inject_key, }
    controller_xena::configure_nova::do_config { 'nova_inject_partition': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_partition', value => $controller_xena::params::nova_inject_partition, }
-   controller_xena::configure_nova::do_config { 'nova_glance_api_servers': conf_file => '/etc/nova/nova.conf', section => 'glance', param => 'api_servers', value => $controller_xena::params::glance_api_servers, }
+## FF in xena e' deprecato
+#   controller_xena::configure_nova::do_config { 'nova_glance_api_servers': conf_file => '/etc/nova/nova.conf', section => 'glance', param => 'api_servers', value => $controller_xena::params::glance_api_servers, }
+##
    controller_xena::configure_nova::do_config { 'nova_neutron_endpoint_override': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'endpoint_override', value => $controller_xena::params::neutron_endpoint_override, }
    controller_xena::configure_nova::do_config { 'nova_neutron_auth_type': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_type', value => $controller_xena::params::auth_type, }
    controller_xena::configure_nova::do_config { 'nova_neutron_auth_url': conf_file => '/etc/nova/nova.conf', section => 'neutron', param => 'auth_url', value => $controller_xena::params::neutron_auth_url, }
