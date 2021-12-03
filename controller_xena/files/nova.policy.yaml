@@ -1,0 +1,35 @@
+# Pause a server
+# POST  /servers/{server_id}/action (pause)
+# Intended scope(s): system, project
+"os_compute_api:os-pause-server:pause": "rule:admin_api or user_id:%(user_id)s"
+
+# Delete a server
+# DELETE  /servers/{server_id}
+# Intended scope(s): system, project
+"os_compute_api:servers:delete": "rule:admin_api or user_id:%(user_id)s"
+
+# Resize a server
+# POST  /servers/{server_id}/action (resize)
+# Intended scope(s): system, project
+"os_compute_api:servers:resize": "rule:admin_api or user_id:%(user_id)s"
+
+# Rebuild a server
+# POST  /servers/{server_id}/action (rebuild)
+# Intended scope(s): system, project
+"os_compute_api:servers:rebuild": "rule:admin_api or user_id:%(user_id)s"
+
+# Stop a server
+# POST  /servers/{server_id}/action (os-stop)
+# Intended scope(s): system, project
+"os_compute_api:servers:stop": "rule:admin_api or user_id:%(user_id)s"
+
+# Resume suspended server
+# POST  /servers/{server_id}/action (resume)
+# Intended scope(s): system, project
+"os_compute_api:os-suspend-server:resume": "rule:admin_api or user_id:%(user_id)s"
+
+# Suspend server
+# POST  /servers/{server_id}/action (suspend)
+# Intended scope(s): system, project
+"os_compute_api:os-suspend-server:suspend": "rule:admin_api or user_id:%(user_id)s"
+

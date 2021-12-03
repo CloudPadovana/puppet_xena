@@ -297,6 +297,9 @@ class controller_xena::params ($cloud_role){
    $nova_inject_password = true
    $nova_log_dir = '/var/log/nova'
    $nova_oslo_lock_path = '/var/lib/nova/tmp'
+   ## FF per xena
+   $nova_policy_file = '/etc/nova/policy.yaml'
+   ##
    $nova_scheduler_max_attempts = '10'
    $nova_host_subset_size = '10'
    $nova_username = 'nova'

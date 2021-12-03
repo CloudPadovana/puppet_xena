@@ -3,10 +3,7 @@ class controller_xena::configure_nova inherits controller_xena::params {
 #
 # Questa classe:
 # - popola il file /etc/nova/nova.conf
-# - crea il file /etc/nova/policy.json in modo che solo l'owner di una VM possa farne lo stop e delete
-############
-# FF attenzione in xena il policy.json deve essere convertito in yaml file, vedi https://docs.openstack.org/oslo.policy/latest/cli/oslopolicy-convert-json-to-yaml.html
-############ 
+# - crea il file /etc/nova/policy.yaml in modo che solo l'owner di una VM possa farne lo stop e delete
 # - crea il file /etc/nova/vendor-data.json
 # 
 ###################  
@@ -144,13 +141,14 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
   controller_xena::configure_nova::do_config { 'nova_rabbit_ha_queues': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_rabbit', param => 'rabbit_ha_queues', value => $controller_xena::params::rabbit_ha_queues, }
   controller_xena::configure_nova::do_config { 'nova_amqp_durable_queues': conf_file => '/etc/nova/nova.conf', section => 'oslo_messaging_rabbit', param => 'amqp_durable_queues', value => $controller_xena::params::amqp_durable_queues, }
+  controller_xena::configure_nova::do_config { 'nova_policy_file': conf_file => '/etc/nova/nova.conf', section => 'oslo_policy', param => 'policy_file', value => $controller_xena::params::nova_policy_file, }
 
 
 
 ######nova_policy and 00-nova-placement are copied from /controller_xena/files dir       
-file {'nova_policy.json':
-           source      => 'puppet:///modules/controller_xena/nova_policy.json',
-           path        => '/etc/nova/policy.json',
+file {'nova.policy.yaml':
+           source      => 'puppet:///modules/controller_xena/nova.policy.yaml',
+           path        => '/etc/nova/policy.yaml',
            backup      => true,
            owner   => root,
            group   => nova,
