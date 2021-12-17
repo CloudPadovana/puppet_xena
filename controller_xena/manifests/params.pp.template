@@ -245,7 +245,7 @@ class controller_xena::params ($cloud_role){
    ## FF per Xena
    $glance_log_dir = '/var/log/glance'
    $glance_policy_file = '/etc/glance/policy.yaml'
-   $glance_service_token_roles_required = 'true'
+   $glance_service_token_roles_required = true
    ###
    $glance_store_datadir = '/var/lib/glance/images/'
    $glance_username = 'glance'
