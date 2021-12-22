@@ -132,7 +132,9 @@ w
   $nova_instance_usage_audit = false
   $nova_instance_usage_audit_period = 'hour'
   $nova_lock_path               = '/var/lib/nova/tmp'
+  $nova_log_dir = '/var/log/nova'
   $nova_preallocate_images    	= 'space'
+  $nova_state_path = '/var/lib/nova'
   $nova_username         = 'nova'     
   $nova_use_neutron = true
   $ovs_local_ip            = $::datanw_ip       

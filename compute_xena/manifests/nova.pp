@@ -98,6 +98,15 @@ define do_config_list ($conf_file, $section, $param, $values) {
   compute_xena::nova::do_config { 'nova_allow_resize': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'allow_resize_to_same_host', value => $compute_xena::params::allow_resize, }
   ### FF in xena deve essere esplicitato il compute_driver
   compute_xena::nova::do_config { 'nova_compute_driver': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'compute_driver', value => $compute_xena::params::nova_compute_driver, }
+
+  ## MS se non si specifica log_dir, logga in syslog
+compute_xena::nova::do_config { 'nova_log_dir': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'log_dir', value => $compute_xena::params::nova_log_dir, }
+  ## MS se non si specifica state_path, usa /usr/lib/python3.6/site-packages
+compute_xena::nova::do_config { 'nova_state_path': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'state_path', value => $compute_xena::params::nova_state_path, }
+
+
+
+
   compute_xena::nova::do_config { 'nova_auth_type': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'auth_type', value => $compute_xena::params::auth_type}
   compute_xena::nova::do_config { 'nova_project_domain_name': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'project_domain_name', value => $compute_xena::params::project_domain_name, }
   compute_xena::nova::do_config { 'nova_user_domain_name': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'user_domain_name', value => $compute_xena::params::user_domain_name, }
