@@ -61,6 +61,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
               
        
 # nova.conf
+## MS auth_strategy is now deprecated
    controller_xena::configure_nova::do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $controller_xena::params::auth_strategy, }
 
    controller_xena::configure_nova::do_config { 'nova_vendordata_providers': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_providers', value => $controller_xena::params::nova_vendordata_providers, }
@@ -101,6 +102,9 @@ define do_config_list ($conf_file, $section, $param, $values) {
    controller_xena::configure_nova::do_config { 'nova_username': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'username', value => $controller_xena::params::nova_username, }
    controller_xena::configure_nova::do_config { 'nova_password': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'password', value => $controller_xena::params::nova_password, }
    controller_xena::configure_nova::do_config { 'nova_cafile': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_xena::params::cafile, }
+
+  # MS In xena da` un warning se questo non e` a true
+   controller_xena::configure_nova::do_config { 'nova_service_token_roles_required': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::nova_service_token_roles_required, }
 
    controller_xena::configure_nova::do_config { 'nova_inject_password': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_password', value => $controller_xena::params::nova_inject_password, }
    controller_xena::configure_nova::do_config { 'nova_inject_key': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_key', value => $controller_xena::params::nova_inject_key, }

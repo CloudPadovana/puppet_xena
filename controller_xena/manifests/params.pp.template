@@ -301,6 +301,7 @@ class controller_xena::params ($cloud_role){
    $nova_policy_file = '/etc/nova/policy.yaml'
    ##
    $nova_scheduler_max_attempts = '10'
+   $nova_service_token_roles_required = true
    $nova_host_subset_size = '10'
    $nova_username = 'nova'
    $nova_vendordata_providers = 'StaticJSON'
