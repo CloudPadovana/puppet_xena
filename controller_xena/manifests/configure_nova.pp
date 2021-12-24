@@ -62,7 +62,7 @@ define do_config_list ($conf_file, $section, $param, $values) {
        
 # nova.conf
 ## MS auth_strategy is now deprecated
-   controller_xena::configure_nova::do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $controller_xena::params::auth_strategy, }
+#   controller_xena::configure_nova::do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $controller_xena::params::auth_strategy, }
 
    controller_xena::configure_nova::do_config { 'nova_vendordata_providers': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_providers', value => $controller_xena::params::nova_vendordata_providers, }
    controller_xena::configure_nova::do_config { 'nova_vendordata_jsonfile_path': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'vendordata_jsonfile_path', value => $controller_xena::params::nova_vendordata_jsonfile_path, }
