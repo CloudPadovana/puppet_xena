@@ -263,6 +263,7 @@ class controller_xena::params ($cloud_role){
    $iscsi_volume_driver = 'cinder.volume.drivers.nfs.NfsDriver'
    $iscsi_volume_group = 'iscsi-infnpd'
    $keystone_auth_methods = 'sKey,password,token'
+   $keystone_log_dir = '/var/log/keystone'
    $keystone_token_provider = 'fernet'
    $ml2_enable_ipset = true
    $ml2_enable_security_group = true

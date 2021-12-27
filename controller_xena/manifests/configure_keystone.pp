@@ -63,6 +63,11 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
   controller_xena::configure_keystone::do_config { 'keystone_public_endpoint': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'public_endpoint', value => $controller_xena::params::keystone_public_endpoint, }
 
+  # MS. Sembra che in xena non rispetti il default per log_dir e serve quindi settarlo esplicitamente
+  controller_xena::configure_keystone::do_config { 'keystone_log_dir': conf_file => '/etc/keystone/keystone.conf', section => 'DEFAULT', param => 'log_dir', value => $controller_xena::params::keystone_log_dir, }
+
+
+
 # Deprecated
 # Reason: With the removal of the 2.0 API keystone does not distinguish between
 # admin and public endpoints.
