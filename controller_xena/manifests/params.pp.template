@@ -252,6 +252,7 @@ class controller_xena::params ($cloud_role){
    $glance_username = 'glance'
    $heat_endpoint_type = 'publicURL'
    $heat_insecure = true
+   $heat_service_token_roles_required = true
    $heat_stack_domain_admin = 'heat_domain_admin'
    $heat_stack_user_domain_name = 'heat'
    $heat_username = 'heat'
@@ -288,6 +289,7 @@ class controller_xena::params ($cloud_role){
    $neutron_notify_nova_on_port_data_changes = true
    $neutron_notify_nova_on_port_status_changes = true
    $neutron_service_plugins = 'router'
+   $neutron_service_token_roles_required = true
    $neutron_username = 'neutron'
    $nova_cinder_catalog_info = 'volumev3::internalURL'
    $nova_cpu_allocation_ratio = '4.0'

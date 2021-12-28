@@ -65,6 +65,11 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_xena::configure_neutron::do_config { 'neutron_cafile': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_xena::params::cafile, }
    controller_xena::configure_neutron::do_config { 'neutron_memcached_servers': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_xena::params::memcached_servers, }
 
+    # MS In xena da` un warning se questo non e` a true
+   controller_xena::configure_neutron::do_config { 'neutron_service_token_roles_required': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::neutron_service_token_roles_required, }
+
+
+
    ##FF in rocky [nova] auth_url da 35357 diventa 5000
    controller_xena::configure_neutron::do_config { 'neutron_nova_auth_url': conf_file => '/etc/neutron/neutron.conf', section => 'nova', param => 'auth_url', value => $controller_xena::params::neutron_auth_url, }
    controller_xena::configure_neutron::do_config { 'neutron_nova_auth_type': conf_file => '/etc/neutron/neutron.conf', section => 'nova', param => 'auth_type', value => $controller_xena::params::auth_type, }
