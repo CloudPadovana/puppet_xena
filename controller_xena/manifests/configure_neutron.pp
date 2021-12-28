@@ -66,7 +66,8 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_xena::configure_neutron::do_config { 'neutron_memcached_servers': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_xena::params::memcached_servers, }
 
     # MS In xena da` un warning se questo non e` a true
-   controller_xena::configure_neutron::do_config { 'neutron_service_token_roles_required': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::neutron_service_token_roles_required, }
+    # Ma se si mette a true non funziona piu` nulla. Es. un nova list ritorna "Networking client is experiencing an unauthorized exception"
+#   controller_xena::configure_neutron::do_config { 'neutron_service_token_roles_required': conf_file => '/etc/neutron/neutron.conf', section => 'keystone_authtoken', param => 'service_to#ken_roles_required', value => $controller_xena::params::neutron_service_token_roles_required, }
 
 
 
