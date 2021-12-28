@@ -57,6 +57,11 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_xena::configure_cinder::do_config { 'cinder_cafile': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_xena::params::cafile, }
    controller_xena::configure_cinder::do_config { 'cinder_keystone_authtoken_memcached_servers': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_xena::params::memcached_servers, }
 
+   # MS In xena da` un warning se questo non e` a true
+   controller_xena::configure_cinder::do_config { 'cinder_service_token_roles_required': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::cinder_service_token_roles_required, }
+
+
+
    controller_xena::configure_cinder::do_config { 'cinder_lock_path': conf_file => '/etc/cinder/cinder.conf', section => 'oslo_concurrency', param => 'lock_path', value => $controller_xena::params::cinder_lock_path, }
 ##########Iscsi
 ##   controller_xena::configure_cinder::do_config { 'cinder_iscsi_volume_group': conf_file => '/etc/cinder/cinder.conf', section => 'iscsi-infnpd', param => 'volume_group', value => $controller_xena::params::iscsi_volume_group, }

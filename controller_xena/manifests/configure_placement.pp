@@ -39,6 +39,11 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_xena::configure_placement::do_config { 'placement_www_authenticate_uri': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_xena::params::www_authenticate_uri, }
    controller_xena::configure_placement::do_config { 'placement_cafile': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_xena::params::cafile, }
 
+ # MS In xena da` un warning se questo non e` a true
+   controller_xena::configure_placement::do_config { 'placement_service_token_roles_required': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::placement_service_token_roles_required, }
+
+
+
 ######placement_policy is copied from /controller_xena/files dir       
 file {'placement_policy.json':
            source      => 'puppet:///modules/controller_xena/placement_policy.json',

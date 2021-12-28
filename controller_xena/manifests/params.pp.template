@@ -205,6 +205,7 @@ class controller_xena::params ($cloud_role){
    $cinder_iscsi_shares_config = '/etc/cinder/shares'
    $cinder_lock_path = '/var/lib/cinder/tmp'
    $cinder_my_ip = $::mgmt_ip
+   $cinder_service_token_roles_required = true
    $cinder_username = 'cinder'
    $dhcp_agents_per_network = '2'
    $dhcp_driver = 'neutron.agent.linux.dhcp.Dnsmasq'
@@ -319,6 +320,7 @@ class controller_xena::params ($cloud_role){
    $pci_t4 = '{"name":"T4","product_id":"1eb8","vendor_id":"10de","device_type":"type-PF"}'
    $pci_v100 = '{"name":"V100","product_id":"1df6","vendor_id":"10de","device_type":"type-PCI"}'
    $pci_passthrough_whitelist =  '{\"vendor_id\":\"10de\"}'
+   $placement_service_token_roles_required = true
    $placement_username = 'placement'
    $project_domain_name = 'Default'
    $quota_network = '1'
