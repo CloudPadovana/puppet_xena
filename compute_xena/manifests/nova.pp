@@ -81,7 +81,9 @@ define do_config_list ($conf_file, $section, $param, $values) {
 
   compute_xena::nova::do_config { 'nova_enabled_apis': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'enabled_apis', value => $compute_xena::params::nova_enabled_apis, }
   compute_xena::nova::do_config { 'nova_transport_url': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'transport_url', value => $compute_xena::params::transport_url, }
-  compute_xena::nova::do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $compute_xena::params::auth_strategy, }
+  #
+  # MS: deprecated in Xena
+  #compute_xena::nova::do_config { 'nova_auth_strategy': conf_file => '/etc/nova/nova.conf', section => 'api', param => 'auth_strategy', value => $compute_xena::params::auth_strategy, }
 
 ####
   compute_xena::nova::do_config { 'nova_use_neutron': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'use_neutron', value => $compute_xena::params::nova_use_neutron}
@@ -129,7 +131,8 @@ compute_xena::nova::do_config { 'nova_state_path': conf_file => '/etc/nova/nova.
   ###
   compute_xena::nova::do_config { 'nova_novncproxy': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'novncproxy_base_url', value => $compute_xena::params::novncproxy_base_url, }
 
-  compute_xena::nova::do_config { 'nova_glance': conf_file => '/etc/nova/nova.conf', section => 'glance', param => 'api_servers', value => $compute_xena::params::glance_api_servers, }
+# MS: deprecated in xena
+#  compute_xena::nova::do_config { 'nova_glance': conf_file => '/etc/nova/nova.conf', section => 'glance', param => 'api_servers', value => $compute_xena::params::glance_api_servers, }
 
   compute_xena::nova::do_config { 'nova_lock_path': conf_file => '/etc/nova/nova.conf', section => 'oslo_concurrency', param => 'lock_path', value => $compute_xena::params::nova_lock_path, }
 #############
