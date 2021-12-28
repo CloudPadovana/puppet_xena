@@ -45,7 +45,7 @@ class controller_xena::configure_horizon inherits controller_xena::params {
  
     exec { "download_cap_repo":
       command => "/usr/bin/wget -q -O /etc/yum.repos.d/openstack-security-integrations.repo ${cap_repo_url}",
-      unless  => "/bin/grep Train /etc/yum.repos.d/openstack-security-integrations.repo 2>/dev/null >/dev/null",
+      unless  => "/bin/grep Xena /etc/yum.repos.d/openstack-security-integrations.repo 2>/dev/null >/dev/null",
     }
 
     package { ["openstack-auth-cap", "openstack-auth-shib"]:
