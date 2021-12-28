@@ -58,7 +58,8 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_xena::configure_cinder::do_config { 'cinder_keystone_authtoken_memcached_servers': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_xena::params::memcached_servers, }
 
    # MS In xena da` un warning se questo non e` a true
-   controller_xena::configure_cinder::do_config { 'cinder_service_token_roles_required': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::cinder_service_token_roles_required, }
+   # Ma se si mette a true da` poi errore nelle operazioni di attach
+   #controller_xena::configure_cinder::do_config { 'cinder_service_token_roles_required': conf_file => '/etc/cinder/cinder.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::cinder_service_token_roles_required, }
 
 
 
