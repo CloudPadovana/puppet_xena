@@ -151,12 +151,13 @@ define remove_config ($conf_file, $section, $param, $value) {
 
 
 # MS In xena da` un warning se questo non e` a true
-   controller_xena::configure_heat::do_config { 'heat_service_token_roles_required':
-     conf_file => '/etc/heat/heat.conf',
-     section => 'keystone_authtoken',
-     param => 'service_token_roles_required',
-     value => $controller_xena::params::heat_service_token_roles_required,
-   }
+# Ma almeno per alcuni servizi da` problemi se questo e` a true
+#   controller_xena::configure_heat::do_config { 'heat_service_token_roles_required':
+#     conf_file => '/etc/heat/heat.conf',
+#     section => 'keystone_authtoken',
+#     param => 'service_token_roles_required',
+#     value => $controller_xena::params::heat_service_token_roles_required,
+#   }
 
 
 

@@ -40,7 +40,8 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_xena::configure_placement::do_config { 'placement_cafile': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_xena::params::cafile, }
 
  # MS In xena da` un warning se questo non e` a true
-   controller_xena::configure_placement::do_config { 'placement_service_token_roles_required': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::placement_service_token_roles_required, }
+ # Ma almeno per alcuni servizi da` problemi se e` a true
+#   controller_xena::configure_placement::do_config { 'placement_service_token_roles_required': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::placement_service_token_roles_required, }
 
 
 

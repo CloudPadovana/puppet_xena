@@ -67,7 +67,9 @@ define remove_config ($conf_file, $section, $param, $value) {
   controller_xena::configure_glance::do_config { 'glance_api_cafile': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_xena::params::cafile, }
   controller_xena::configure_glance::do_config { 'glance_api_memcached_servers': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'memcached_servers', value => $controller_xena::params::memcached_servers, }
   controller_xena::configure_glance::do_config { 'glance_api_auth_type': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'auth_type', value => $controller_xena::params::auth_type, }
-  controller_xena::configure_glance::do_config { 'glance_service_token_roles_required': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'service_token_roles_required ', value => $controller_xena::params::glance_service_token_roles_required, }
+
+# C'e` un warning che dice che questo deve essere a true, ma almeno per alcuni servizi la cosa da` problemi
+#  controller_xena::configure_glance::do_config { 'glance_service_token_roles_required': conf_file => '/etc/glance/glance-api.conf', section => 'keystone_authtoken', param => 'service_token_roles_required ', value => $controller_xena::params::glance_service_token_roles_required, }
 
   controller_xena::configure_glance::do_config { 'glance_api_flavor': conf_file => '/etc/glance/glance-api.conf', section => 'paste_deploy', param => 'flavor', value => $controller_xena::params::flavor, }
 

@@ -104,7 +104,8 @@ define do_config_list ($conf_file, $section, $param, $values) {
    controller_xena::configure_nova::do_config { 'nova_cafile': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'cafile', value => $controller_xena::params::cafile, }
 
   # MS In xena da` un warning se questo non e` a true
-   controller_xena::configure_nova::do_config { 'nova_service_token_roles_required': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::nova_service_token_roles_required, }
+  # Ma almeno per qualche servizio da` problemi se e` a true
+#   controller_xena::configure_nova::do_config { 'nova_service_token_roles_required': conf_file => '/etc/nova/nova.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::nova_service_token_roles_required, }
 
    controller_xena::configure_nova::do_config { 'nova_inject_password': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_password', value => $controller_xena::params::nova_inject_password, }
    controller_xena::configure_nova::do_config { 'nova_inject_key': conf_file => '/etc/nova/nova.conf', section => 'libvirt', param => 'inject_key', value => $controller_xena::params::nova_inject_key, }
