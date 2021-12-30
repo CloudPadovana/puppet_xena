@@ -3,7 +3,6 @@ class controller_xena::configure_placement inherits controller_xena::params {
 #
 # Questa classe:
 # - popola il file /etc/placement/placement.conf
-# - crea il file /etc/placement/policy.json
 # 
 ###################  
 define do_config ($conf_file, $section, $param, $value) {
@@ -44,17 +43,18 @@ define remove_config ($conf_file, $section, $param, $value) {
 #   controller_xena::configure_placement::do_config { 'placement_service_token_roles_required': conf_file => '/etc/placement/placement.conf', section => 'keystone_authtoken', param => 'service_token_roles_required', value => $controller_xena::params::placement_service_token_roles_required, }
 
 
-
+#
+# Non dovrebbbe esserci bisogno di un policy file custom
 ######placement_policy is copied from /controller_xena/files dir       
-file {'placement_policy.json':
-           source      => 'puppet:///modules/controller_xena/placement_policy.json',
-           path        => '/etc/placement/policy.json',
-           backup      => true,
-           owner   => root,
-           group   => placement,
-           mode    => "0640",
-
-         }
+#file {'placement_policy.json':
+#           source      => 'puppet:///modules/controller_xena/placement_policy.json',
+#           path        => '/etc/placement/policy.json',
+#           backup      => true,
+#           owner   => root,
+#           group   => placement,
+#           mode    => "0640",
+#
+#         }
       
 ## FF       
 file {'00-placement-api.conf':
