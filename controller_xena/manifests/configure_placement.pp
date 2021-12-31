@@ -57,14 +57,15 @@ define remove_config ($conf_file, $section, $param, $value) {
 #         }
       
 ##
-## MS. Dovrebbe andare bene il file che viene dall'rpm
-#file {'00-placement-api.conf':
-#           source      => 'puppet:///modules/controller_xena/00-placement-api.conf',
-#           path        => '/etc/httpd/conf.d/00-placement-api.conf',
-#           ensure      => present,
-#           backup      => true,
-#           mode        => "0640",
-#         }
-##
+## MS. Il file che viene dall'rpm NON va bene. Questa cosa serve ancora
+## FF
+file {'00-placement-api.conf':
+           source      => 'puppet:///modules/controller_xena/00-placement-api.conf',
+           path        => '/etc/httpd/conf.d/00-placement-api.conf',
+           ensure      => present,
+           backup      => true,
+           mode        => "0640",
+         }
+
 
 }
