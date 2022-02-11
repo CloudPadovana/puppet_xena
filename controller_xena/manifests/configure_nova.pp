@@ -76,12 +76,23 @@ define do_config_list ($conf_file, $section, $param, $values) {
    controller_xena::configure_nova::do_config { 'nova_allow_resize': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'allow_resize_to_same_host', value => $controller_xena::params::allow_resize, }
    ## FF in xena va esplicitato
    controller_xena::configure_nova::do_config { 'nova_log_dir': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'log_dir', value => $controller_xena::params::nova_log_dir, }
+
+   controller_xena::configure_nova::do_config { 'nova_osapi_compute_workers': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'osapi_compute_workers', value => $controller_xena::params::nova_osapi_compute_workers, }
+   controller_xena::configure_nova::do_config { 'nova_metadata_workers': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'metadata_workers', value => $controller_xena::params::nova_metadata_workers, }
+
+   controller_xena::configure_nova::do_config { 'nova_conductor_workers': conf_file => '/etc/nova/nova.conf', section => 'conductor', param => 'workers', value => $controller_xena::params::nova_conductor_workers, }
+
+
+
    ###
    controller_xena::configure_nova::do_config { 'nova_enabled_filters': conf_file => '/etc/nova/nova.conf', section => 'filter_scheduler', param => 'enabled_filters', value => $controller_xena::params::enabled_filters, }
    controller_xena::configure_nova::do_config { 'nova_default_schedule_zone': conf_file => '/etc/nova/nova.conf', section => 'DEFAULT', param => 'default_schedule_zone', value => $controller_xena::params::nova_default_schedule_zone, }
    controller_xena::configure_nova::do_config { 'nova_scheduler_max_attempts': conf_file => '/etc/nova/nova.conf', section => 'scheduler', param => 'max_attempts', value => $controller_xena::params::nova_scheduler_max_attempts, }
    controller_xena::configure_nova::do_config { 'nova_host_subset_size': conf_file => '/etc/nova/nova.conf', section => 'filter_scheduler', param => 'host_subset_size', value => $controller_xena::params::nova_host_subset_size, }
    controller_xena::configure_nova::do_config { 'nova_host_discover_hosts': conf_file => '/etc/nova/nova.conf', section => 'scheduler', param => 'discover_hosts_in_cells_interval', value => $controller_xena::params::nova_discover_hosts_in_cells_interval, }
+   controller_xena::configure_nova::do_config { 'nova_scheduler_workers': conf_file => '/etc/nova/nova.conf', section => 'scheduler', param => 'workers', value => $controller_xena::params::nova_scheduler_workers, }
+
+
    controller_xena::configure_nova::do_config { 'nova_vnc_server_listen': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'server_listen', value => $controller_xena::params::vip_pub, }
    controller_xena::configure_nova::do_config { 'nova_vnc_server_proxyclient_address': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'server_proxyclient_address', value => $controller_xena::params::vip_mgmt, }
    controller_xena::configure_nova::do_config { 'nova_vnc_enabled': conf_file => '/etc/nova/nova.conf', section => 'vnc', param => 'enabled', value => $controller_xena::params::vnc_enabled, }

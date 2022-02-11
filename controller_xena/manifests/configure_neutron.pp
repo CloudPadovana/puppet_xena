@@ -47,6 +47,7 @@ define remove_config ($conf_file, $section, $param, $value) {
 #MS: The min_l3_agents_per_router configuration option was deprecated in Newton cycle and removed in Ocata       
 #   controller_xena::configure_neutron::do_config { 'neutron_min_l3_agents_per_router': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'min_l3_agents_per_router', value => $controller_xena::params::neutron_min_l3_agents_per_router, }
    controller_xena::configure_neutron::do_config { 'neutron_allow_automatic_dhcp_failover': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'allow_automatic_dhcp_failover', value => $controller_xena::params::allow_automatic_dhcp_failover, }
+   controller_xena::configure_neutron::do_config { 'neutron_api_workers': conf_file => '/etc/neutron/neutron.conf', section => 'DEFAULT', param => 'api_workers', value => $controller_xena::params::neutron_api_workers, }
 
    controller_xena::configure_neutron::do_config { 'neutron_db': conf_file => '/etc/neutron/neutron.conf', section => 'database', param => 'connection', value => $controller_xena::params::neutron_db, }
 

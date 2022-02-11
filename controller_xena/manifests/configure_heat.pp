@@ -64,7 +64,21 @@ define remove_config ($conf_file, $section, $param, $value) {
     param     => 'stack_user_domain_name',
     value     => $controller_xena::params::heat_stack_user_domain_name,
   }
-  
+
+  controller_xena::configure_heat::do_config { 'heat_num_engine_workers':
+    conf_file => '/etc/heat/heat.conf',
+    section   => 'DEFAULT',
+    param     => 'num_engine_workers',
+    value     => $controller_xena::params::heat_num_engine_workers,
+  }
+
+  controller_xena::configure_heat::do_config { 'heat_workers':
+    conf_file => '/etc/heat/heat.conf',
+    section   => 'heat_api',
+    param     => 'workers',
+    value     => $controller_xena::params::heat_workers,
+  }
+
   controller_xena::configure_heat::do_config { 'heat_db':
     conf_file => '/etc/heat/heat.conf',
     section   => 'database',

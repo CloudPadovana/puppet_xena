@@ -51,6 +51,11 @@ define remove_config ($conf_file, $section, $param, $value) {
    controller_xena::configure_ec2::do_config { 'ec2_cinder_service_type': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'cinder_service_type', value => $controller_xena::params::ec2_cinder_service_type, } 
        controller_xena::configure_ec2::do_config { 'ec2_full_vpc_support': conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'full_vpc_support', value => $controller_xena::params::ec2_full_vpc_support, }
    controller_xena::configure_ec2::do_config { 'keystone_ec2_tokens_url':  conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'keystone_ec2_tokens_url', value => "${controller_xena::params::ec2_keystone_url}/ec2tokens",}
+   controller_xena::configure_ec2::do_config { 'ec2_ec2api_workers':  conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'ec2api_workers', value => $controller_xena::params::ec2_ec2api_workers,}
+   controller_xena::configure_ec2::do_config { 'ec2_metadata_workers':  conf_file => '/etc/ec2api/ec2api.conf', section => 'DEFAULT', param => 'metadata_workers', value => $controller_xena::params::ec2_metadata_workers,}
+
+
+
    controller_xena::configure_ec2::do_config { 'ec2_db': conf_file => '/etc/ec2api/ec2api.conf', section => 'database', param => 'connection', value => $controller_xena::params::ec2_db, }
 #   controller_xena::configure_ec2::do_config { 'ec2_auth_uri': conf_file => '/etc/ec2api/ec2api.conf', section => 'keystone_authtoken', param => 'auth_uri', value => $controller_xena::params::auth_url, }   
    controller_xena::configure_ec2::do_config { 'ec2_www_authenticate_uri': conf_file => '/etc/ec2api/ec2api.conf', section => 'keystone_authtoken', param => 'www_authenticate_uri', value => $controller_xena::params::www_authenticate_uri, }   

@@ -53,6 +53,7 @@ define remove_config ($conf_file, $section, $param, $value) {
   controller_xena::configure_glance::do_config { 'glance_api_show_image_direct_url': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'show_image_direct_url', value => $controller_xena::params::glance_api_show_image_direct_url, }
   controller_xena::configure_glance::do_config { 'glance_api_enabled_backends': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'enabled_backends', value => $controller_xena::params::glance_api_enabled_backends, }
   controller_xena::configure_glance::do_config { 'glance_log_dir': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'log_dir', value => $controller_xena::params::glance_log_dir, }
+  controller_xena::configure_glance::do_config { 'glance_workers': conf_file => '/etc/glance/glance-api.conf', section => 'DEFAULT', param => 'workers', value => $controller_xena::params::glance_workers, }
   controller_xena::configure_glance::do_config { 'glance_api_filesystem_store_datadir': conf_file => '/etc/glance/glance-api.conf', section => 'os_glance_staging_store', param => 'filesystem_store_datadir', value => $controller_xena::params::glance_api_filesystem_store_datadir, }
 
   controller_xena::configure_glance::do_config { 'glance_api_db': conf_file => '/etc/glance/glance-api.conf', section => 'database', param => 'connection', value => $controller_xena::params::glance_db, }

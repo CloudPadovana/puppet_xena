@@ -43,6 +43,7 @@ define remove_config ($conf_file, $section, $param, $value) {
 
   controller_xena::configure_cinder::do_config { 'cinder_db': conf_file => '/etc/cinder/cinder.conf', section => 'database', param => 'connection', value => $controller_xena::params::cinder_db, }
   controller_xena::configure_cinder::do_config { 'cinder_transport_url': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'transport_url', value => $controller_xena::params::transport_url, }
+  controller_xena::configure_cinder::do_config { 'cinder_osapi_volume_workers': conf_file => '/etc/cinder/cinder.conf', section => 'DEFAULT', param => 'osapi_volume_workers', value => $controller_xena::params::cinder_osapi_volume_workers, }
 
    ## FF da queens cambiano le porte, /etc/cinder/cinder.conf [keystone_authtoken] auth_uri = http://controller:5000 e auth_url = http://controller:5000
    ## MS Anche per cinder dovrebbe essere auth_uri --> www_authenticate_uri
