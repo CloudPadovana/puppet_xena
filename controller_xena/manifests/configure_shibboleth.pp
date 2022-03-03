@@ -131,7 +131,7 @@ class controller_xena::configure_shibboleth inherits controller_xena::params {
   }
 
   service { "shibd":
-    enable     => enable,
+    enable     => true,
     ensure     => running,
     hasstatus  => true,
     hasrestart => true,
