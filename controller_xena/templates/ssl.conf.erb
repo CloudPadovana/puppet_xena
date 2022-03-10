@@ -171,7 +171,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 <% if @enable_aai_ext -%>
 <% if @enable_shib -%>
-    WSGIScriptAlias /dashboard-infn "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+    WSGIScriptAlias /dashboard-infn "/usr/share/openstack-dashboard/openstack_dashboard/wsgi.py"
 
     <Location /dashboard-infn>
         AuthType           shibboleth
@@ -202,7 +202,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 <% @oidc_providers.each do | prov_id, prov_data | 
      enc_iss = scope.function_encode_iss([ prov_data["iss"] ])["url"]
      if prov_data.fetch("local_user", false) -%>
-    WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+    WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi.py"
 
     <Location /dashboard-<%=prov_id-%>>
         AuthType openid-connect
@@ -374,7 +374,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 
 <% if @enable_aai_ext -%>
 <% if @enable_shib -%>
-    WSGIScriptAlias /dashboard-unipd "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+    WSGIScriptAlias /dashboard-unipd "/usr/share/openstack-dashboard/openstack_dashboard/wsgi.py"
 
     <Location /dashboard-infn>
         AuthType           shibboleth
@@ -406,7 +406,7 @@ SSLCipherSuite          "ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA3
 <% @oidc_providers.each do | prov_id, prov_data |
      enc_iss = scope.function_encode_iss([ prov_data["iss"] ])["url"]
      if prov_data.fetch("local_user", false) -%>
-    WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi/django.wsgi"
+    WSGIScriptAlias /dashboard-<%=prov_id-%> "/usr/share/openstack-dashboard/openstack_dashboard/wsgi.py"
 
     <Location /dashboard-<%=prov_id-%>>
         AuthType openid-connect
